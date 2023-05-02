@@ -9,5 +9,9 @@ public class Car
 
 public enum CarModel
 {
-
+    BMW,
+    Mercedes,
+    Lada,
+    Chevrolet,
+    Nissan,
 }   
