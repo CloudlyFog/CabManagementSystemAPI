@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-05-02T06:56:17.082Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="8SWBxbwi7beZEiTydoiq" version="21.2.1" type="device">
+<mxfile host="Electron" modified="2023-05-02T07:23:00.443Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.1 Chrome/112.0.5615.87 Electron/24.1.2 Safari/537.36" etag="KGS-PEEDJu-EIwqNI8mA" version="21.2.1" type="device">
   <diagram name="Страница 1" id="oWysp2OVsN0CYv4uCDCX">
     <mxGraphModel dx="1434" dy="854" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1600" math="0" shadow="0">
       <root>
@@ -135,7 +135,7 @@
             <mxRectangle width="30" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="OuRnTtTqpt9LMuQ2mWhH-52" value="Taxi" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" parent="OuRnTtTqpt9LMuQ2mWhH-50" vertex="1">
+        <mxCell id="OuRnTtTqpt9LMuQ2mWhH-52" value="Car" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;whiteSpace=wrap;html=1;" parent="OuRnTtTqpt9LMuQ2mWhH-50" vertex="1">
           <mxGeometry x="30" width="150" height="30" as="geometry">
             <mxRectangle width="150" height="30" as="alternateBounds" />
           </mxGeometry>
