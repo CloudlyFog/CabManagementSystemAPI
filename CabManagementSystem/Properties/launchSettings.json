@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "CabManagementSystem": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53372;http://localhost:53373"
+    }
+  }
+}
