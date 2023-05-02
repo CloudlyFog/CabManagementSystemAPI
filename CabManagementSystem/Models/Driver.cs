@@ -5,7 +5,7 @@ namespace CabManagementSystem.Models;
 [Table("Drivers")]
 public class Driver
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; }
     public int Experience { get; set; }
     public bool IsBusy { get; set; }

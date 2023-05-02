@@ -5,7 +5,14 @@ namespace CabManagementSystem.Models;
 [Table("Orders")]
 public class Order
 {
-    public Guid? Id { get; set; }
+    public static readonly Order Default = new()
+    {
+        AddressFrom = "default",
+        AddressTo = "default",
+        Price = -1,
+        OrderDateTime = DateTime.Now,
+    };
+    public Guid? Id { get; set; } = Guid.NewGuid();
     public string AddressFrom { get; set; }
     public string AddressTo { get; set; }
     public decimal Price { get; set; }
