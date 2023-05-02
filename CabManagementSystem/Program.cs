@@ -1,3 +1,9 @@
+using BankSystem7.Extensions;
+using BankSystem7.Models;
+using CabManagementSystem.Models;
+
+const string DatabaseName = "CabManagementSystem";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +12,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddNationBankSystem<CabUser, Card, BankAccount, Bank, Credit>(o =>
+{
+    o.EnsureCreated = true;
+    o.EnsureDeleted = false;
+    o.DatabaseName = DatabaseName;
+    o.OperationOptions = new BankSystem7.Services.OperationServiceOptions()
+    {
+        DatabaseName = DatabaseName,
+    };
+});
 
 var app = builder.Build();
 
