@@ -1,5 +1,8 @@
-﻿namespace CabManagementSystem.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace CabManagementSystem.Models;
+
+[Table("Orders")]
 public class Order
 {
     public Guid? Id { get; set; }

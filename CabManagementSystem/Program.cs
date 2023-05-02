@@ -1,6 +1,10 @@
 using BankSystem7.Extensions;
 using BankSystem7.Models;
+using BankSystem7.Services;
+using CabManagementSystem.Data;
 using CabManagementSystem.Models;
+using CabManagementSystem.Services.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 const string DatabaseName = "CabManagementSystem";
 
@@ -16,11 +20,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddNationBankSystem<CabUser, Card, BankAccount, Bank, Credit>(o =>
 {
     o.EnsureCreated = true;
-    o.EnsureDeleted = false;
+    o.EnsureDeleted = true;
     o.DatabaseName = DatabaseName;
-    o.OperationOptions = new BankSystem7.Services.OperationServiceOptions()
+    o.OperationOptions = new OperationServiceOptions()
     {
         DatabaseName = DatabaseName,
+    };
+    o.Contexts = new Dictionary<DbContext, object?>
+    {
+        { new ApplicationContext(), new CabManagementSystemModelConfiguration() },
     };
 });
 
