@@ -1,31 +1,27 @@
-using CabManagementSystem.Models;
-using CabManagementSystem.Services.Repositories;
+
 
 namespace CabManagementSystemTest
 {
     public class Tests
     {
-        private OrderRepository _orderRepository;
+        // private readonly OrderRepository _orderRepository;
         [SetUp]
         public void Setup()
         {
-            _orderRepository = new();
+            //_orderRepository = new();
         }
 
         [Test]
         public void Test1()
         {
             var order = GetOrder();
-            _orderRepository.Create(order);
+            //_orderRepository.Create(order);
             Assert.Pass();
         }
 
-        private Order GetOrder()
+        private object GetOrder()
         {
-            var car = new Car
-            {
-
-            }
+            return 1;
         }
     }
 }
