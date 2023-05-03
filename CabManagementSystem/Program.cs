@@ -28,7 +28,7 @@ builder.Services.AddNationBankSystem<CabUser, Card, BankAccount, Bank, Credit>(o
     };
     o.Contexts = new Dictionary<DbContext, object?>
     {
-        { new ApplicationContext(), new CabManagementSystemModelConfiguration() },
+        { new CabContext(), new CabManagementSystemModelConfiguration() },
     };
 });
 

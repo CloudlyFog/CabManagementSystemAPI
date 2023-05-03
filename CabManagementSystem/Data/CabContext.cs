@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CabManagementSystem.Data;
 
-public class ApplicationContext : GenericDbContext<CabUser, Card, BankAccount, Bank, Credit>
+public class CabContext : GenericDbContext<CabUser, Card, BankAccount, Bank, Credit>
 {
-    public ApplicationContext()
+    public CabContext()
     {
     }
 
-    public ApplicationContext(ModelConfiguration modelConfiguration) : base(modelConfiguration)
+    public CabContext(ModelConfiguration modelConfiguration) : base(modelConfiguration)
     {
     }
     public DbSet<Order> Orders { get; set; }

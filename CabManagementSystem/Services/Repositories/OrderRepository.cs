@@ -9,13 +9,13 @@ namespace CabManagementSystem.Services.Repositories;
 
 public sealed class OrderRepository : IRepository<Order>
 {
-    private readonly ApplicationContext _applicationContext;
+    private readonly CabContext _cabContext;
     public OrderRepository()
     {
-        _applicationContext = new ApplicationContext();
+        _cabContext = new CabContext();
     }
     public IQueryable<Order> All =>
-        _applicationContext.Orders
+        _cabContext.Orders
         .Include(x => x.Car)
         .Include(x => x.Driver)
         .AsNoTracking() ?? Enumerable.Empty<Order>().AsQueryable();
@@ -28,9 +28,9 @@ public sealed class OrderRepository : IRepository<Order>
         if (!Exist(x => x.Id == item.Id))
             return ExceptionModel.EntityNotExist;
 
-        _applicationContext.ChangeTracker.Clear();
-        _applicationContext.Orders.Add(item);
-        _applicationContext.SaveChanges();
+        _cabContext.ChangeTracker.Clear();
+        _cabContext.Orders.Add(item);
+        _cabContext.SaveChanges();
         return ExceptionModel.Ok;
     }
 
