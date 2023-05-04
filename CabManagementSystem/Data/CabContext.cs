@@ -12,9 +12,10 @@ public class CabContext : GenericDbContext<CabUser, Card, BankAccount, Bank, Cre
     {
     }
 
-    public CabContext(ModelConfiguration modelConfiguration) : base(modelConfiguration)
+    public CabContext(ModelConfiguration? modelConfiguration) : base(modelConfiguration)
     {
     }
+
     public DbSet<Order> Orders { get; set; }
     public DbSet<Car> Cars { get; set; }
 }
