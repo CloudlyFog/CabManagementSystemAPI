@@ -6,6 +6,14 @@ namespace CabManagementSystem.Services.Configuration;
 
 public class CabManagementSystemModelConfiguration : ModelConfiguration
 {
+    public CabManagementSystemModelConfiguration()
+    {
+        
+    }
+
+    public CabManagementSystemModelConfiguration(bool initializeAccess) : base(initializeAccess)
+    {
+    }
     public override void Invoke(ModelBuilder modelBuilder)
     {
         ConfigureDriverRelationships(modelBuilder);
