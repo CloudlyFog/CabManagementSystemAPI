@@ -12,11 +12,34 @@ public class Order
         Price = -1,
         OrderDateTime = DateTime.Now,
     };
+
+    public Order()
+    {
+        
+    }
+
+    public Order(Driver driver, Car car, CabUser user)
+    {
+        Driver = driver;
+        DriverId = driver.Id;
+
+        Car = car;
+        CarId = car.Id;
+
+        User = user;
+        UserId = user.ID;
+    }
+
+    public Order(CabUser user)
+    {
+        User = user;
+        UserId = user.ID;
+    }
     public Guid? Id { get; set; } = Guid.NewGuid();
     public string AddressFrom { get; set; }
     public string AddressTo { get; set; }
     public decimal Price { get; set; }
-    public DateTime? OrderDateTime { get; set; }
+    public DateTime? OrderDateTime { get; set; } = DateTime.Now;
 
     public Guid? UserId { get; set; }
     public CabUser? User { get; set; }
@@ -26,4 +49,29 @@ public class Order
 
     public Guid? CarId { get; set; }
     public Car? Car { get; set; }
+
+    public static Order SetOrder(Order order, Driver driver, Car car, CabUser user)
+    {
+        order.Car = car;
+        order.CarId = car.Id;
+
+        order.Driver = driver;
+        order.DriverId = driver.Id;
+
+        order.User = user;
+        order.UserId = user.ID;
+        order.User.Orders.Add(order);
+
+
+        order.Car.Driver = order.Driver;
+        order.Car.DriverId = order.DriverId;
+
+        order.Driver.Car = order.Car;
+        order.Driver.CarId = order.CarId;
+
+        order.Car.Order = order;
+        order.Driver.Order = order;
+
+        return order;
+    }
 }
