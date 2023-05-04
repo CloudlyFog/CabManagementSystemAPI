@@ -26,19 +26,16 @@ public class CabManagementSystemModelConfiguration : ModelConfiguration
         modelBuilder.Entity<Order>()
             .HasOne(order => order.Driver)
             .WithOne(driver => driver.Order)
-            .HasForeignKey<Driver>(order => order.OrderId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey<Driver>(order => order.OrderId);
 
         modelBuilder.Entity<Order>()
             .HasOne(order => order.Car)
             .WithOne(car => car.Order)
-            .HasForeignKey<Car>(order => order.OrderId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey<Car>(order => order.OrderId);
 
         modelBuilder.Entity<Order>()
             .HasOne(order => order.User)
-            .WithMany(user => user.Orders)
-            .HasForeignKey(x => x.UserId);
+            .WithMany(user => user.Orders);
     }
 
     private void ConfigureDriverRelationships(ModelBuilder modelBuilder)
