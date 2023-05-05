@@ -70,6 +70,23 @@ public class Tests
         Assert.Pass();
     }
 
+    [Test]
+    public void TestCarRepository()
+    {
+        var car = GetCar();
+        var driver = GetDriver();
+        _driverRepository.Create(driver);
+        _carRepository.Create(car);
+        _driverRepository.Delete(driver);
+        _driverRepository.Create(driver);
+
+        var newCar = _carRepository.Get(x => x.Id == car.Id);
+        newCar.Mileage = 10000;
+        _carRepository.Update(newCar);
+        _carRepository.Delete(newCar);
+        Assert.Pass();
+    }
+
     private Order GetOrder()
     {
         var user = new CabUser(User.Default);
