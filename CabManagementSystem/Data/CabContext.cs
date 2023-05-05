@@ -53,4 +53,11 @@ public class CabContext : GenericDbContext<CabUser, Card, BankAccount, Bank, Cre
         if (car?.Order is not null)
             Entry(car?.Order).State = EntityState.Unchanged;
     }
+
+    public void UpdateTracker<T>(T item, EntityState state, Action action)
+    {
+        ChangeTracker.Clear();
+        Entry(item).State = state;
+        action.Invoke();
+    }
 }
