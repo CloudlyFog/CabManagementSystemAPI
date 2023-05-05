@@ -26,11 +26,10 @@ public sealed class DriverRepository : OptionsUpdater, IRepository<Driver>
 
     public ExceptionModel Create(Driver item)
     {
-        if (item?.Car is null || item?.Order is null || Exist(x => x.Id == item.Id))
+        if (item?.Car is null || Exist(x => x.Id == item.Id))
             return ExceptionModel.OperationFailed;
 
-        UpdateTracker(item);
-        _cabContext.Drivers.Add(item);
+        UpdateTracker(item, EntityState.Added);
         _cabContext.SaveChanges();
         return ExceptionModel.Ok;
     }
@@ -40,8 +39,7 @@ public sealed class DriverRepository : OptionsUpdater, IRepository<Driver>
         if (!FitsConditions(item))
             return ExceptionModel.OperationFailed;
 
-        UpdateTracker(item);
-        _cabContext.Drivers.Remove(item);
+        UpdateTracker(item, EntityState.Deleted);
         _cabContext.SaveChanges();
         return ExceptionModel.Ok;
     }
@@ -62,7 +60,7 @@ public sealed class DriverRepository : OptionsUpdater, IRepository<Driver>
 
     public bool FitsConditions(Driver? item)
     {
-        return item?.Car is not null && item?.Order is not null && !Exist(x => x.Id == item.Id);
+        return item?.Car is not null && Exist(x => x.Id == item.Id);
     }
 
     public Driver Get(Expression<Func<Driver, bool>> predicate)
@@ -75,15 +73,15 @@ public sealed class DriverRepository : OptionsUpdater, IRepository<Driver>
         if (!FitsConditions(item))
             return ExceptionModel.OperationFailed;
 
-        UpdateTracker(item);
-        _cabContext.Drivers.Update(item);
+        UpdateTracker(item, EntityState.Modified);
         _cabContext.SaveChanges();
         return ExceptionModel.Ok;
     }
 
-    private void UpdateTracker(Driver item)
+    private void UpdateTracker(Driver item, EntityState state)
     {
         _cabContext.ChangeTracker.Clear();
+        _cabContext.Entry(item).State = state;
         _cabContext.AvoidDriverChanges(item);
     }
 
