@@ -29,15 +29,19 @@ public class CabContext : GenericDbContext<CabUser, Card, BankAccount, Bank, Cre
         Entry(order.User).State = EntityState.Unchanged;
     }
 
-    public void AvoidChanges<T>(T item, Type[] types)
+    public void AvoidDriverChanges(Driver driver)
     {
-        if (item is null || types is null || types.Length == 0)
+        if (driver is null)
             return;
+        Entry(driver.Car).State = EntityState.Unchanged;
+        Entry(driver.Order).State = EntityState.Unchanged;
+    }
 
-        foreach (var prop in item.GetType().GetProperties())
-        {
-            if (types.Any(x => x == prop.GetType()))
-                Entry(prop.GetValue(item)).State = EntityState.Unchanged;
-        }
+    public void AvoidCarChanges(Car car)
+    {
+        if (car is null)
+            return;
+        Entry(car.Driver).State = EntityState.Unchanged;
+        Entry(car.Order).State = EntityState.Unchanged;
     }
 }
