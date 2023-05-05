@@ -18,6 +18,7 @@ public class CabContext : GenericDbContext<CabUser, Card, BankAccount, Bank, Cre
 
     public DbSet<Order> Orders { get; set; }
     public DbSet<Car> Cars { get; set; }
+    public DbSet<Driver> Drivers { get; set; }
 
     public void AvoidOrderChanges(Order order)
     {
