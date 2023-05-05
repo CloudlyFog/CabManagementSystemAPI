@@ -26,7 +26,7 @@ public class CabManagementSystemModelConfiguration : ModelConfiguration
         modelBuilder.Entity<Order>()
             .HasOne(order => order.Driver)
             .WithOne(driver => driver.Order)
-            .HasForeignKey<Driver>(order => order.OrderId);
+            .HasForeignKey<Driver>(driver => driver.OrderId);
 
         modelBuilder.Entity<Order>()
             .HasOne(order => order.Car)
@@ -40,11 +40,6 @@ public class CabManagementSystemModelConfiguration : ModelConfiguration
 
     private void ConfigureDriverRelationships(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Driver>()
-            .HasOne(driver => driver.Order)
-            .WithOne(order => order.Driver)
-            .HasForeignKey<Driver>(driver => driver.OrderId);
-
         modelBuilder.Entity<Driver>()
             .HasOne(driver => driver.Car)
             .WithOne(car => car.Driver)
