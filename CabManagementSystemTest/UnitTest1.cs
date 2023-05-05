@@ -20,8 +20,8 @@ public class Tests
         _orderRepository = new(new CabManagementOptions()
         {
             DatabaseName = "Test2",
-            EnsureCreated = true,
-            EnsureDeleted = true,
+            EnsureCreated = false,
+            EnsureDeleted = false,
             Contexts = new Dictionary<DbContext, ModelConfiguration?>
             {
                 { new CabContext(), new CabManagementSystemModelConfiguration(true) }
@@ -36,6 +36,9 @@ public class Tests
         var order = GetOrderNew();
         _orderRepository.Create(order);
         var newOrder = _orderRepository.Get(x => x.Id == order.Id);
+        newOrder.AddressFrom = "ksdfjsdklfsd";
+        _orderRepository.Update(newOrder);
+        _orderRepository.Delete(order);
         Assert.That(newOrder, Is.EqualTo(new Order()));
         Assert.Pass();
     }
@@ -43,21 +46,22 @@ public class Tests
     {
         var order = new Order()
         {
+            Id = new Guid("3831AA12-0DAE-4B31-9E41-709B54624FE4"),
             AddressFrom = "addrFrom",
             AddressTo = "addrTo",
             Price = 100,
         };
         var car = new Car()
         {
+            Id = new Guid("B4AFE754-085D-4CB4-B394-B914ACE39BF4"),
             CarModel = CarModel.Mercedes,
             Mileage = 1000,
-            IsBusy = true,
         };
         var driver = new Driver()
         {
+            Id = new Guid("1A37EDEF-3BA8-4EB0-9ABD-64FA92E875BC"),
             Name = "Alex",
             Experience = 10,
-            IsBusy = true,
         };
 
         var user = new CabUser(User.Default);
