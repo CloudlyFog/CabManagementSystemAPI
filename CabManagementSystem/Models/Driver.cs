@@ -29,10 +29,10 @@ public class Driver
     public Guid? OrderId { get; set; }
     public Order? Order { get; set; }
 
-    public static Driver SetDriver(Driver driver, Car car)
+    public static Driver SetDriver(Driver? driver, Car? car)
     {
         driver.Car = car;
-        driver.CarId = car.Id;
+        driver.CarId = car?.Id;
 
         return driver;
     }

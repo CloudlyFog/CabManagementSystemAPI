@@ -27,12 +27,22 @@ public class CarRepository : OptionsUpdater, IRepository<Car>
 
     public ExceptionModel Create(Car item)
     {
-        throw new NotImplementedException();
+        if (item?.Driver is null || Exist(x => x.Id == item.Id))
+            return ExceptionModel.OperationFailed;
+
+        UpdateTracker(item, EntityState.Added);
+        _cabContext.SaveChanges();
+        return ExceptionModel.Ok;
     }
 
     public ExceptionModel Delete(Car item)
     {
-        throw new NotImplementedException();
+        if (!FitsConditions(item))
+            return ExceptionModel.OperationFailed;
+
+        UpdateTracker(item, EntityState.Deleted);
+        _cabContext.SaveChanges();
+        return ExceptionModel.Ok;
     }
 
     public void Dispose()
@@ -51,7 +61,7 @@ public class CarRepository : OptionsUpdater, IRepository<Car>
 
     public bool FitsConditions(Car? item)
     {
-        return item?.Driver is not null && Exist(x => x.Id == item.Id);
+        return item?.Driver is not null && !Exist(x => x.Id == item.Id);
     }
 
     public Car Get(Expression<Func<Car, bool>> predicate)
@@ -61,12 +71,25 @@ public class CarRepository : OptionsUpdater, IRepository<Car>
 
     public ExceptionModel Update(Car item)
     {
-        throw new NotImplementedException();
+        if (!FitsConditions(item))
+            return ExceptionModel.OperationFailed;
+
+        UpdateTracker(item, EntityState.Modified);
+        _cabContext.SaveChanges();
+        return ExceptionModel.Ok;
     }
 
     protected override void UpdateOptions(ConfigurationOptions options)
     {
         UpdateDatabaseName(options.DatabaseName);
         base.UpdateOptions(options);
+    }
+
+    private void UpdateTracker(Car item, EntityState state)
+    {
+        _cabContext.UpdateTracker(item, state, delegate
+        {
+            _cabContext.AvoidCarChanges(item);
+        });
     }
 }
