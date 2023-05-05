@@ -5,17 +5,16 @@ namespace CabManagementSystem.Models;
 [Table("Cars")]
 public class Car
 {
+    [NotMapped]
+    public static readonly Car Default = new Car()
+    {
+        Id = Guid.Empty,
+        Mileage = -1,
+        IsBusy = true,
+    };
     public Car()
     {
         
-    }
-    public Car(Order order)
-    {
-        Order = order;
-        OrderId = order.Id;
-
-        Driver = order.Driver;
-        DriverId = order.DriverId;
     }
     public Guid Id { get; set; } = Guid.NewGuid();
     public CarModel CarModel { get; set; }

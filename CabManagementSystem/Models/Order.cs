@@ -5,6 +5,7 @@ namespace CabManagementSystem.Models;
 [Table("Orders")]
 public class Order
 {
+    [NotMapped]
     public static readonly Order Default = new()
     {
         AddressFrom = "default",
@@ -16,24 +17,6 @@ public class Order
     public Order()
     {
         
-    }
-
-    public Order(Driver driver, Car car, CabUser user)
-    {
-        Driver = driver;
-        DriverId = driver.Id;
-
-        Car = car;
-        CarId = car.Id;
-
-        User = user;
-        UserId = user.ID;
-    }
-
-    public Order(CabUser user)
-    {
-        User = user;
-        UserId = user.ID;
     }
     public Guid? Id { get; set; } = Guid.NewGuid();
     public string AddressFrom { get; set; }
