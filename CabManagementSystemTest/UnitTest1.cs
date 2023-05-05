@@ -14,26 +14,33 @@ namespace CabManagementSystemTest;
 public class Tests
 {
     private OrderRepository _orderRepository;
+    private DriverRepository _driverRepository;
+    private CarRepository _carRepository;
+    private CabContext _cabContext;
     [SetUp]
     public void Setup()
     {
-        _orderRepository = new(new CabManagementOptions()
+        var options = new CabManagementOptions()
         {
             DatabaseName = "Test2",
-            EnsureCreated = false,
-            EnsureDeleted = false,
+            EnsureCreated = true,
+            EnsureDeleted = true,
             Contexts = new Dictionary<DbContext, ModelConfiguration?>
             {
                 { new CabContext(), new CabManagementSystemModelConfiguration(true) }
             },
             InitializeAccess = true,
-        });
+        };
+        _orderRepository = new(options);
+        _driverRepository = new(options);
+        _carRepository = new(options);
+        _cabContext = new CabContext();
     }
 
     [Test]
-    public void Test1()
+    public void TestOrderRepository()
     {
-        var order = GetOrderNew();
+        var order = GetOrder();
         _orderRepository.Create(order);
         var newOrder = _orderRepository.Get(x => x.Id == order.Id);
         newOrder.AddressFrom = "ksdfjsdklfsd";
@@ -42,68 +49,72 @@ public class Tests
         Assert.That(newOrder, Is.EqualTo(new Order()));
         Assert.Pass();
     }
-    private Order GetOrderNew()
+
+    [Test]
+    public void TestAvoidChanges()
     {
-        var order = new Order()
+        var order = GetOrder();
+        Assert.Pass();
+    }
+
+    [Test]
+    public void TestDriverRepository()
+    {
+        var driver = GetDriver();
+        _driverRepository.Create(driver);
+        var newDriver = _driverRepository.Get(x => x.Id == driver.Id);
+        newDriver.Name = "nsfkldjfsdlf";
+        _driverRepository.Update(newDriver);
+        _carRepository.Create(GetCar());
+        _driverRepository.Delete(newDriver);
+        Assert.Pass();
+    }
+
+    private Order GetOrder()
+    {
+        var user = new CabUser(User.Default);
+        return Order.SetOrder(GetDefaultOrder(), GetDefaultDriver(), GetDefaultCar(), user);
+    }
+
+    private Driver GetDriver()
+    {
+        return Driver.SetDriver(GetDefaultDriver(), GetDefaultCar());
+    }
+
+    private Car GetCar()
+    {
+        return Car.SetCar(GetDefaultCar(), GetDefaultDriver());
+    }
+
+    private Car GetDefaultCar()
+    {
+        return new Car()
+        {
+            Id = new Guid("B4AFE754-085D-4CB4-B394-B914ACE39BF4"),
+            CarModel = CarModel.Mercedes,
+            Mileage = 1000,
+        };
+    }
+
+    private Driver GetDefaultDriver()
+    {
+        return new Driver()
+        {
+            Id = new Guid("1A37EDEF-3BA8-4EB0-9ABD-64FA92E875BC"),
+            Name = "Alex",
+            Experience = 10,
+        };
+    }
+
+    private Order GetDefaultOrder()
+    {
+        return new Order()
         {
             Id = new Guid("3831AA12-0DAE-4B31-9E41-709B54624FE4"),
             AddressFrom = "addrFrom",
             AddressTo = "addrTo",
             Price = 100,
         };
-        var car = new Car()
-        {
-            Id = new Guid("B4AFE754-085D-4CB4-B394-B914ACE39BF4"),
-            CarModel = CarModel.Mercedes,
-            Mileage = 1000,
-        };
-        var driver = new Driver()
-        {
-            Id = new Guid("1A37EDEF-3BA8-4EB0-9ABD-64FA92E875BC"),
-            Name = "Alex",
-            Experience = 10,
-        };
-
-        var user = new CabUser(User.Default);
-        return Order.SetOrder(order, driver, car, user);
-    }
-    private Order GetOrder()
-    {
-        var user = GetUser();
-        var order = new Order(user)
-        {
-            AddressFrom = "addrFrom",
-            AddressTo = "addrTo",
-            Price = 100,
-        };
-        
-        var car = new Car(order)
-        {
-            CarModel = CarModel.Mercedes,
-            Mileage = 1000,
-            IsBusy = true,
-        };
-        order.Driver = new Driver(order)
-        {
-            Name = "Alex",
-            Experience = 10,
-            IsBusy = true,
-            Car = car,
-            CarId = car.Id,
-        };
-        order.Car = car;
-        order.Car.Driver = order.Driver;
-        order.Driver.Car = order.Car;
-
-        order = new Order(order.Driver, order.Car, order.User)
-        {
-            AddressFrom = "addrFrom",
-            AddressTo = "addrTo",
-            Price = 100,
-        };
-        
-        
-        return order;
     }
 
     private CabUser GetUser()
