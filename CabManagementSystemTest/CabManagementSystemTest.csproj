@@ -17,8 +17,25 @@
     <PackageReference Include="coverlet.collector" Version="3.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CabManagementSystem\CabManagementSystem.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="8.0.0-preview.3.23177.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.3.23174.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-preview.3.23174.2" />
+		<PackageReference Include="MongoDB.Driver" Version="2.19.1" />
+		<PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Npgsql" Version="8.0.0-preview.2" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0-preview.2" />
+		<PackageReference Include="System.Data.HashFunction.Jenkins" Version="2.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="BankSystem7">
+			<HintPath>D:\BankSystem7\BankSystem7\bin\Debug\net7.0\BankSystem7.dll</HintPath>
+		</Reference>
+		<Reference Include="CabManagementSystem">
+			<HintPath>G:\CabManagementSystem\CabManagementSystem\bin\Debug\net7.0\CabManagementSystem.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>

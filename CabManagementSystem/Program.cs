@@ -1,6 +1,7 @@
 using BankSystem7.Extensions;
 using BankSystem7.Models;
 using BankSystem7.Services;
+using BankSystem7.Services.Configuration;
 using CabManagementSystem.Data;
 using CabManagementSystem.Models;
 using CabManagementSystem.Services.Configuration;
@@ -26,9 +27,9 @@ builder.Services.AddNationBankSystem<CabUser, Card, BankAccount, Bank, Credit>(o
     {
         DatabaseName = DatabaseName,
     };
-    o.Contexts = new Dictionary<DbContext, object?>
+    o.Contexts = new Dictionary<DbContext, ModelConfiguration?>
     {
-        { new ApplicationContext(), new CabManagementSystemModelConfiguration() },
+        { new CabContext(), new CabManagementSystemModelConfiguration() },
     };
 });
 
