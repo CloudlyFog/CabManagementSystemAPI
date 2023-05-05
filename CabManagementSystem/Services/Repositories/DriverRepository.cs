@@ -80,9 +80,10 @@ public sealed class DriverRepository : OptionsUpdater, IRepository<Driver>
 
     private void UpdateTracker(Driver item, EntityState state)
     {
-        _cabContext.ChangeTracker.Clear();
-        _cabContext.Entry(item).State = state;
-        _cabContext.AvoidDriverChanges(item);
+        _cabContext.UpdateTracker(item, state, delegate
+        {
+            _cabContext.AvoidDriverChanges(item);
+        });
     }
 
     protected override void UpdateOptions(ConfigurationOptions options)

@@ -41,10 +41,7 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
         if (!CheckOnOrderAbility(item, OrderOperationType.Order))
             return ExceptionModel.OperationFailed;
 
-        _cabContext.ChangeTracker.Clear();
-        _cabContext.Orders.Add(item);
-
-        _cabContext.AvoidOrderChanges(item);
+        UpdateTracker(item, EntityState.Added);
         _cabContext.SaveChanges();
         return ExceptionModel.Ok;
     }
@@ -56,8 +53,7 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
 
         SetOrderDetails(item, OrderOperationType.Reject);
 
-        _cabContext.ChangeTracker.Clear();
-        _cabContext.Orders.Remove(item);
+        UpdateTracker(item, EntityState.Deleted);
         _cabContext.SaveChanges();
         return ExceptionModel.Ok;
     }
@@ -90,9 +86,10 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
         if (!FitsConditions(item))
             return ExceptionModel.EntityNotExist;
 
-        _cabContext.ChangeTracker.Clear();
+
         item.User.Orders.Remove(item);
-        _cabContext.Orders.Update(item);
+        UpdateTracker(item, EntityState.Modified);
+
         _cabContext.SaveChanges();
         return ExceptionModel.Ok;
     }
@@ -122,6 +119,14 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
     {
         UpdateDatabaseName(options.DatabaseName);
         base.UpdateOptions(options);
+    }
+
+    private void UpdateTracker(Order item, EntityState state)
+    {
+        _cabContext.UpdateTracker(item, state, delegate
+        {
+            _cabContext.AvoidOrderChanges(item);
+        });
     }
 }
 
