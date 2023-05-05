@@ -61,7 +61,7 @@ public class CarRepository : OptionsUpdater, IRepository<Car>
 
     public bool FitsConditions(Car? item)
     {
-        return item?.Driver is not null && !Exist(x => x.Id == item.Id);
+        return item?.Driver is not null && Exist(x => x.Id == item.Id);
     }
 
     public Car Get(Expression<Func<Car, bool>> predicate)
