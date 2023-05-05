@@ -24,24 +24,33 @@ public class CabContext : GenericDbContext<CabUser, Card, BankAccount, Bank, Cre
     {
         if (order is null)
             return;
-        Entry(order.Car).State = EntityState.Unchanged;
-        Entry(order.Driver).State = EntityState.Unchanged;
-        Entry(order.User).State = EntityState.Unchanged;
+        if (order?.Car is not null)
+            Entry(order?.Car).State = EntityState.Unchanged;
+        if (order?.Driver is not null)
+            Entry(order?.Driver).State = EntityState.Unchanged;
+        if (order?.User is not null)
+            Entry(order?.User).State = EntityState.Unchanged;
     }
 
     public void AvoidDriverChanges(Driver driver)
     {
         if (driver is null)
             return;
-        Entry(driver.Car).State = EntityState.Unchanged;
-        Entry(driver.Order).State = EntityState.Unchanged;
+
+        if (driver?.Car is not null)
+            Entry(driver?.Car).State = EntityState.Unchanged;
+        if (driver?.Order is not null)
+            Entry(driver?.Order).State = EntityState.Unchanged;
     }
 
     public void AvoidCarChanges(Car car)
     {
         if (car is null)
             return;
-        Entry(car.Driver).State = EntityState.Unchanged;
-        Entry(car.Order).State = EntityState.Unchanged;
+
+        if (car?.Driver is not null)
+            Entry(car?.Driver).State = EntityState.Unchanged;
+        if (car?.Order is not null)
+            Entry(car?.Order).State = EntityState.Unchanged;
     }
 }
