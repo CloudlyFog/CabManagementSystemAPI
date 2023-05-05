@@ -26,6 +26,14 @@ public class Car
 
     public Guid? OrderId { get; set; }
     public Order? Order { get; set; }
+
+    public static Car SetCar(Car car, Driver driver)
+    {
+        car.Driver = driver;
+        car.DriverId = driver.Id;
+
+        return car;
+    }
 }
 
 public enum CarModel
