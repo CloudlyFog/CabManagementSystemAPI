@@ -19,6 +19,7 @@ public sealed class DriverRepository : OptionsUpdater, IRepository<Driver>
         UpdateOptions(options);
         _cabContext = new CabContext();
     }
+
     public IQueryable<Driver> All =>
         _cabContext.Drivers
         .Include(x => x.Car)

@@ -3,6 +3,7 @@ using BankSystem7.Models;
 using BankSystem7.Services;
 using BankSystem7.Services.Configuration;
 using CabManagementSystem.Data;
+using CabManagementSystem.Extensions;
 using CabManagementSystem.Models;
 using CabManagementSystem.Services.Configuration;
 using Microsoft.EntityFrameworkCore;
@@ -18,20 +19,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddNationBankSystem<CabUser, Card, BankAccount, Bank, Credit>(o =>
-{
-    o.EnsureCreated = true;
-    o.EnsureDeleted = true;
-    o.DatabaseName = DatabaseName;
-    o.OperationOptions = new OperationServiceOptions()
-    {
-        DatabaseName = DatabaseName,
-    };
-    o.Contexts = new Dictionary<DbContext, ModelConfiguration?>
-    {
-        { new CabContext(), new CabManagementSystemModelConfiguration() },
-    };
-});
+builder.Services.AddNationBankSystem<CabUser, Card, BankAccount, Bank, Credit>(GetOptions());
+builder.Services.AddCabManagementSystem(GetOptions());
 
 var app = builder.Build();
 
@@ -49,3 +38,21 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+ConfigurationOptions GetOptions()
+{
+    return new ConfigurationOptions
+    {
+        EnsureCreated = false,
+        EnsureDeleted = false,
+        DatabaseName = DatabaseName,
+        OperationOptions = new OperationServiceOptions
+        {
+            DatabaseName = DatabaseName,
+        },
+        Contexts = new Dictionary<DbContext, ModelConfiguration?>
+        {
+            { new CabContext(), new CabManagementSystemModelConfiguration() },
+        }
+    };
+}

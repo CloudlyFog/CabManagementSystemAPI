@@ -1,8 +1,5 @@
-
-
 using BankSystem7.Models;
 using BankSystem7.Services.Configuration;
-using BankSystem7.Services.Repositories;
 using CabManagementSystem.Data;
 using CabManagementSystem.Models;
 using CabManagementSystem.Services.Configuration;
@@ -16,25 +13,42 @@ public class Tests
     private OrderRepository _orderRepository;
     private DriverRepository _driverRepository;
     private CarRepository _carRepository;
+
+    private ServiceConfiguration<CabUser, Card, BankAccount, Bank, Credit> _serviceConfiguration =
+        ServiceConfiguration<CabUser, Card, BankAccount, Bank, Credit>.CreateInstance(GetOptions());
+
     private CabContext _cabContext;
+
     [SetUp]
     public void Setup()
     {
-        var options = new CabManagementOptions()
-        {
-            DatabaseName = "Test2",
-            EnsureCreated = true,
-            EnsureDeleted = true,
-            Contexts = new Dictionary<DbContext, ModelConfiguration?>
-            {
-                { new CabContext(), new CabManagementSystemModelConfiguration(true) }
-            },
-            InitializeAccess = true,
-        };
-        _orderRepository = new(options);
-        _driverRepository = new(options);
-        _carRepository = new(options);
+        _orderRepository = new(GetOptions());
+        _driverRepository = new(GetOptions());
+        _carRepository = new(GetOptions());
         _cabContext = new CabContext();
+    }
+
+    [Test]
+    public void SetupDatabase()
+    {
+        var driver = GetDriver();
+        var car = GetCar();
+        var order = GetOrder();
+        var user = GetUser();
+        _driverRepository.Create(driver);
+        _carRepository.Create(car);
+        _serviceConfiguration.UserRepository.Create(user);
+        _orderRepository.Create(order);
+
+        SetOrderDetails(order, driver, car);
+
+        var updDriver = _driverRepository.Get(x => x.Id == driver.Id);
+        _driverRepository.Update(updDriver);
+
+        var updCar = _carRepository.Get(x => x.Id == car.Id);
+        _carRepository.Update(updCar);
+
+        Assert.Pass();
     }
 
     [Test]
@@ -70,9 +84,26 @@ public class Tests
         Assert.Pass();
     }
 
+    [Test]
+    public void TestCarRepository()
+    {
+        var car = GetCar();
+        var driver = GetDriver();
+        _driverRepository.Create(driver);
+        _carRepository.Create(car);
+        _driverRepository.Delete(driver);
+        _driverRepository.Create(driver);
+
+        var newCar = _carRepository.Get(x => x.Id == car.Id);
+        newCar.Mileage = 10000;
+        _carRepository.Update(newCar);
+        _carRepository.Delete(newCar);
+        Assert.Pass();
+    }
+
     private Order GetOrder()
     {
-        var user = new CabUser(User.Default);
+        var user = GetUser();
         return Order.SetOrder(GetDefaultOrder(), GetDefaultDriver(), GetDefaultCar(), user);
     }
 
@@ -133,6 +164,7 @@ public class Tests
 
         var user = new CabUser()
         {
+            ID = new Guid("4AB6414C-AD4C-4094-BC91-869E0CF65429"),
             Name = "alex",
             Email = "alex@gmail.com",
             Password = "test",
@@ -147,5 +179,28 @@ public class Tests
         user.Card = new Card(user.Age, user: user, bankAccount: bankAccount);
 
         return user;
+    }
+
+    private void SetOrderDetails(Order order, Driver driver, Car car)
+    {
+        driver.Order = order;
+        driver.OrderId = order.Id;
+
+        car.Order = order;
+        car.OrderId = order.Id;
+    }
+
+    private static ConfigurationOptions GetOptions()
+    {
+        return new ConfigurationOptions()
+        {
+            DatabaseName = "CabManagementSystem",
+            EnsureCreated = true,
+            EnsureDeleted = true,
+            Contexts = new Dictionary<DbContext, ModelConfiguration?>
+            {
+                { new CabContext(), new CabManagementSystemModelConfiguration(true) }
+            },
+        };
     }
 }

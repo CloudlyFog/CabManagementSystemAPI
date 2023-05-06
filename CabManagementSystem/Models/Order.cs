@@ -16,8 +16,8 @@ public class Order
 
     public Order()
     {
-        
     }
+
     public Guid? Id { get; set; } = Guid.NewGuid();
     public string AddressFrom { get; set; }
     public string AddressTo { get; set; }
@@ -44,7 +44,6 @@ public class Order
         order.User = user;
         order.UserId = user.ID;
         order.User.Orders.Add(order);
-
 
         order.Car.Driver = order.Driver;
         order.Car.DriverId = order.DriverId;

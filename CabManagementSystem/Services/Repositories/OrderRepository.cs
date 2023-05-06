@@ -4,7 +4,6 @@ using BankSystem7.Services.Interfaces;
 using CabManagementSystem.Data;
 using CabManagementSystem.Models;
 using CabManagementSystem.Services.Abstract;
-using CabManagementSystem.Services.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -15,7 +14,7 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
     private readonly CabContext _cabContext;
     private bool _disposed;
 
-    public OrderRepository(CabManagementOptions options)
+    public OrderRepository(ConfigurationOptions options)
     {
         UpdateOptions(options);
         _cabContext = new CabContext();
@@ -85,7 +84,6 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
     {
         if (!FitsConditions(item))
             return ExceptionModel.EntityNotExist;
-
 
         item.User.Orders.Remove(item);
         UpdateTracker(item, EntityState.Modified);
