@@ -15,7 +15,7 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
     private readonly CabContext _cabContext;
     private bool _disposed;
 
-    public OrderRepository(CabManagementOptions options)
+    public OrderRepository(ConfigurationOptions options)
     {
         UpdateOptions(options);
         _cabContext = new CabContext();

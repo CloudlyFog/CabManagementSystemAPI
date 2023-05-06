@@ -20,7 +20,7 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        var options = new CabManagementOptions()
+        var options = new ConfigurationOptions()
         {
             DatabaseName = "Test2",
             EnsureCreated = true,
@@ -29,7 +29,6 @@ public class Tests
             {
                 { new CabContext(), new CabManagementSystemModelConfiguration(true) }
             },
-            InitializeAccess = true,
         };
         _orderRepository = new(options);
         _driverRepository = new(options);
