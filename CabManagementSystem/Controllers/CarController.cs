@@ -52,9 +52,9 @@ public class CarController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult UpdateCar(Car car)
+    public IActionResult UpdateCar(Guid id, Car car)
     {
-        var getCar = _carRepository.Get(x => x.Id == car.Id);
+        var getCar = _carRepository.Get(x => x.Id == id);
         var update = _carRepository.Update(car.SetValuesTo(getCar));
         if (update is not ExceptionModel.Ok or ExceptionModel.Successfully)
             return BadRequest();
@@ -62,12 +62,12 @@ public class CarController : ControllerBase
     }
 
     [HttpDelete]
-    public IActionResult DeleteCar(Car car)
+    public IActionResult DeleteCar(Guid id)
     {
-        var getCar = _carRepository.Get(x => x.Id == car.Id);
-        var update = _carRepository.Delete(getCar);
-        if (update is not ExceptionModel.Ok or ExceptionModel.Successfully)
+        var getCar = _carRepository.Get(x => x.Id == id);
+        var delete = _carRepository.Delete(getCar);
+        if (delete is not ExceptionModel.Ok or ExceptionModel.Successfully)
             return BadRequest();
-        return Ok(update);
+        return Ok(delete);
     }
 }
