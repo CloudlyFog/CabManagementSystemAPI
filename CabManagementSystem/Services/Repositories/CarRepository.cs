@@ -89,7 +89,7 @@ public class CarRepository : OptionsUpdater, IRepository<Car>
     {
         _cabContext.UpdateTracker(item, state, delegate
         {
-            _cabContext.AvoidCarChanges(item);
-        });
+            _cabContext.AvoidChanges(new object[]{ item.Driver, item.Order });
+        }, _cabContext);
     }
 }

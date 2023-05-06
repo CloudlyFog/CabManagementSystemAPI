@@ -31,7 +31,7 @@ public class CabManagementSystemModelConfiguration : ModelConfiguration
         modelBuilder.Entity<Order>()
             .HasOne(order => order.Car)
             .WithOne(car => car.Order)
-            .HasForeignKey<Car>(order => order.OrderId);
+            .HasForeignKey<Car>(car => car.OrderId);
 
         modelBuilder.Entity<Order>()
             .HasOne(order => order.User)

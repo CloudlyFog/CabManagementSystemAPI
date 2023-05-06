@@ -83,8 +83,8 @@ public sealed class DriverRepository : OptionsUpdater, IRepository<Driver>
     {
         _cabContext.UpdateTracker(item, state, delegate
         {
-            _cabContext.AvoidDriverChanges(item);
-        });
+            _cabContext.AvoidChanges(new object[] { item.Car, item.Order });
+        }, _cabContext);
     }
 
     protected override void UpdateOptions(ConfigurationOptions options)

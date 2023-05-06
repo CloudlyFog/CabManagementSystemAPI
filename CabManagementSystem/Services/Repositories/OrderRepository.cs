@@ -123,8 +123,8 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
     {
         _cabContext.UpdateTracker(item, state, delegate
         {
-            _cabContext.AvoidOrderChanges(item);
-        });
+            _cabContext.AvoidChanges(new object[] { item.Car, item.Driver, item.User });
+        }, _cabContext);
     }
 }
 
