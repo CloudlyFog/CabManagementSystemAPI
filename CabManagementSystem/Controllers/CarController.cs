@@ -29,38 +29,28 @@ public class CarController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult Get(Guid id)
+    public string Get(Guid id)
     {
-        var car = _carRepository.Get(x => x.Id == id);
-        return Ok(car.Serialize());
+        return _carRepository.Get(x => x.Id == id).Serialize();
     }
 
     [HttpPost]
-    public IActionResult Create(Car car)
+    public void Create(Car car)
     {
-        var create = _carRepository.Create(car);
-        if (create is not ExceptionModel.Ok or ExceptionModel.Successfully)
-            return BadRequest();
-        return Ok(create);
+        _carRepository.Create(car);
     }
 
     [HttpPut]
-    public IActionResult Update(Guid id, Car car)
+    public void Update(Guid id, Car car)
     {
         var getCar = _carRepository.Get(x => x.Id == id);
-        var update = _carRepository.Update(car.SetValuesTo(getCar));
-        if (update is not ExceptionModel.Ok or ExceptionModel.Successfully)
-            return BadRequest();
-        return Ok(update);
+        _carRepository.Update(car.SetValuesTo(getCar));
     }
 
     [HttpDelete]
-    public IActionResult Delete(Guid id)
+    public void Delete(Guid id)
     {
         var getCar = _carRepository.Get(x => x.Id == id);
-        var delete = _carRepository.Delete(getCar);
-        if (delete is not ExceptionModel.Ok or ExceptionModel.Successfully)
-            return BadRequest();
-        return Ok(delete);
+        _carRepository.Delete(getCar);
     }
 }
