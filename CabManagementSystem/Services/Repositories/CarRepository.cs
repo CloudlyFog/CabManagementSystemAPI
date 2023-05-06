@@ -1,6 +1,4 @@
-﻿
-
-using BankSystem7.Models;
+﻿using BankSystem7.Models;
 using BankSystem7.Services.Configuration;
 using BankSystem7.Services.Interfaces;
 using CabManagementSystem.Data;
@@ -15,11 +13,13 @@ public class CarRepository : OptionsUpdater, IRepository<Car>
 {
     private readonly CabContext _cabContext;
     private bool _disposed;
+
     public CarRepository(ConfigurationOptions options)
     {
         UpdateOptions(options);
         _cabContext = new CabContext();
     }
+
     public IQueryable<Car> All =>
         _cabContext.Cars
         .Include(x => x.Driver)

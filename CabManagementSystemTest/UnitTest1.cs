@@ -1,14 +1,10 @@
-
-
 using BankSystem7.Models;
 using BankSystem7.Services.Configuration;
-using BankSystem7.Services.Repositories;
 using CabManagementSystem.Data;
 using CabManagementSystem.Models;
 using CabManagementSystem.Services.Configuration;
 using CabManagementSystem.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace CabManagementSystemTest;
 
@@ -17,9 +13,12 @@ public class Tests
     private OrderRepository _orderRepository;
     private DriverRepository _driverRepository;
     private CarRepository _carRepository;
+
     private ServiceConfiguration<CabUser, Card, BankAccount, Bank, Credit> _serviceConfiguration =
         ServiceConfiguration<CabUser, Card, BankAccount, Bank, Credit>.CreateInstance(GetOptions());
+
     private CabContext _cabContext;
+
     [SetUp]
     public void Setup()
     {

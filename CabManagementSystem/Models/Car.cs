@@ -12,10 +12,11 @@ public class Car
         Mileage = -1,
         IsBusy = true,
     };
+
     public Car()
     {
-        
     }
+
     public Guid Id { get; set; } = Guid.NewGuid();
     public CarModel CarModel { get; set; }
     public int Mileage { get; set; }
@@ -43,4 +44,4 @@ public enum CarModel
     Lada,
     Chevrolet,
     Nissan,
-}   
+}

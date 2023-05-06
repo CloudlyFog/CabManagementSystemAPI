@@ -3,10 +3,10 @@ using BankSystem7.Models;
 using BankSystem7.Services;
 using BankSystem7.Services.Configuration;
 using CabManagementSystem.Data;
+using CabManagementSystem.Extensions;
 using CabManagementSystem.Models;
 using CabManagementSystem.Services.Configuration;
 using Microsoft.EntityFrameworkCore;
-using CabManagementSystem.Extensions;
 
 const string DatabaseName = "CabManagementSystem";
 

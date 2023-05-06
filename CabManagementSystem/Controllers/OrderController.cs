@@ -2,9 +2,7 @@
 using BankSystem7.Services.Interfaces;
 using CabManagementSystem.Extensions;
 using CabManagementSystem.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace CabManagementSystem.Controllers;
 
@@ -13,6 +11,7 @@ namespace CabManagementSystem.Controllers;
 public class OrderController : ControllerBase
 {
     private readonly IRepository<Order> _orderRepository;
+
     public OrderController(IRepository<Order> orderRepository)
     {
         _orderRepository = orderRepository;

@@ -1,13 +1,8 @@
-﻿using BankSystem7.Services.Interfaces;
-using CabManagementSystem.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using BankSystem7.Models;
-using BankSystem7.Extensions;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using BankSystem7.Extensions;
+using BankSystem7.Services.Interfaces;
 using CabManagementSystem.Extensions;
+using CabManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CabManagementSystem.Controllers;
 

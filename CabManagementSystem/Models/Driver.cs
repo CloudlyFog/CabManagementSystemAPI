@@ -13,9 +13,9 @@ public class Driver
         Experience = -1,
         IsBusy = true,
     };
+
     public Driver()
     {
-        
     }
 
     public Guid Id { get; set; } = Guid.NewGuid();

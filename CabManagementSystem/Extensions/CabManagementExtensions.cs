@@ -16,6 +16,7 @@ public static class CabManagementExtensions
         services.AddSingleton<IRepository<Order>>(new OrderRepository(resultOptions));
         return services;
     }
+
     public static IServiceCollection AddCabManagementSystem(this IServiceCollection services, ConfigurationOptions options)
     {
         services.AddSingleton<IRepository<Car>>(new CarRepository(options));

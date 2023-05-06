@@ -2,7 +2,6 @@
 using BankSystem7.Services.Interfaces;
 using CabManagementSystem.Extensions;
 using CabManagementSystem.Models;
-using CabManagementSystem.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,10 +13,12 @@ namespace CabManagementSystem.Controllers
     public class DriverController : ControllerBase
     {
         private readonly IRepository<Driver> _driverRepository;
+
         public DriverController(IRepository<Driver> driverRepository)
         {
             _driverRepository = driverRepository;
         }
+
         [HttpGet]
         public string All()
         {

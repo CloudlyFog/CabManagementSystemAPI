@@ -4,7 +4,6 @@ using BankSystem7.Services.Interfaces;
 using CabManagementSystem.Data;
 using CabManagementSystem.Models;
 using CabManagementSystem.Services.Abstract;
-using CabManagementSystem.Services.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -85,7 +84,6 @@ public sealed class OrderRepository : OptionsUpdater, IRepository<Order>
     {
         if (!FitsConditions(item))
             return ExceptionModel.EntityNotExist;
-
 
         item.User.Orders.Remove(item);
         UpdateTracker(item, EntityState.Modified);

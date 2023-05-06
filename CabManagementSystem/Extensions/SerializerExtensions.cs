@@ -1,5 +1,4 @@
-﻿using CabManagementSystem.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace CabManagementSystem.Extensions;
 
