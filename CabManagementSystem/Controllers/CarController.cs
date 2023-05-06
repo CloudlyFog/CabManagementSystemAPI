@@ -7,6 +7,7 @@ using BankSystem7.Models;
 using BankSystem7.Extensions;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.AspNetCore.Http.HttpResults;
+using CabManagementSystem.Extensions;
 
 namespace CabManagementSystem.Controllers;
 
@@ -24,22 +25,14 @@ public class CarController : ControllerBase
     [HttpGet]
     public IActionResult All()
     {
-        var json = JsonConvert.SerializeObject(_carRepository.All, Formatting.Indented, new JsonSerializerSettings
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        });
-        return Ok(json);
+        return Ok(_carRepository.All.Serialize());
     }
 
     [HttpGet("{id}")]
     public IActionResult Get(Guid id)
     {
         var car = _carRepository.Get(x => x.Id == id);
-        var json = JsonConvert.SerializeObject(car, Formatting.Indented, new JsonSerializerSettings
-        {
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        });
-        return Ok(json);
+        return Ok(car.Serialize());
     }
 
     [HttpPost]
