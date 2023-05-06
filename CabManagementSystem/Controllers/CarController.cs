@@ -23,9 +23,9 @@ public class CarController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult All()
+    public string All()
     {
-        return Ok(_carRepository.All.Serialize());
+        return _carRepository.All.Serialize();
     }
 
     [HttpGet("{id}")]

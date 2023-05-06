@@ -1,44 +1,53 @@
-﻿using CabManagementSystem.Models;
+﻿using BankSystem7.Extensions;
+using BankSystem7.Services.Interfaces;
+using CabManagementSystem.Extensions;
+using CabManagementSystem.Models;
+using CabManagementSystem.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CabManagementSystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/drivers")]
     [ApiController]
     public class DriverController : ControllerBase
     {
-        // GET: api/<DriverController>
+        private readonly IRepository<Driver> _driverRepository;
+        public DriverController(IRepository<Driver> driverRepository)
+        {
+            _driverRepository = driverRepository;
+        }
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string All()
         {
-            return new string[] { "value1", "value2" };
+            return _driverRepository.All.Serialize();
         }
 
-        // GET api/<DriverController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public string Get(Guid id)
         {
-            return "value";
+            return _driverRepository.Get(x => x.Id == id).Serialize();
         }
 
-        // POST api/<DriverController>
         [HttpPost]
         public void Create(Driver driver)
         {
+            _driverRepository.Create(driver);
         }
 
-        // PUT api/<DriverController>/5
         [HttpPut("{id}")]
         public void Update(Guid id, Driver driver)
         {
+            var updDriver = _driverRepository.Get(x => x.Id == id);
+            _driverRepository.Update(driver.SetValuesTo(updDriver));
         }
 
-        // DELETE api/<DriverController>/5
         [HttpDelete("{id}")]
         public void Delete(Guid id)
         {
+            var driver = _driverRepository.Get(x => x.Id == id);
+            _driverRepository.Delete(driver);
         }
     }
 }
