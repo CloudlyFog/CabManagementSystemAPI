@@ -22,7 +22,7 @@ public class CarController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult All()
     {
         var json = JsonConvert.SerializeObject(_carRepository.All, Formatting.Indented, new JsonSerializerSettings
         {
@@ -32,7 +32,7 @@ public class CarController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetCar(Guid id)
+    public IActionResult Get(Guid id)
     {
         var car = _carRepository.Get(x => x.Id == id);
         var json = JsonConvert.SerializeObject(car, Formatting.Indented, new JsonSerializerSettings
@@ -43,7 +43,7 @@ public class CarController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult CreateCar(Car car)
+    public IActionResult Create(Car car)
     {
         var create = _carRepository.Create(car);
         if (create is not ExceptionModel.Ok or ExceptionModel.Successfully)
@@ -52,7 +52,7 @@ public class CarController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult UpdateCar(Guid id, Car car)
+    public IActionResult Update(Guid id, Car car)
     {
         var getCar = _carRepository.Get(x => x.Id == id);
         var update = _carRepository.Update(car.SetValuesTo(getCar));
@@ -62,7 +62,7 @@ public class CarController : ControllerBase
     }
 
     [HttpDelete]
-    public IActionResult DeleteCar(Guid id)
+    public IActionResult Delete(Guid id)
     {
         var getCar = _carRepository.Get(x => x.Id == id);
         var delete = _carRepository.Delete(getCar);
