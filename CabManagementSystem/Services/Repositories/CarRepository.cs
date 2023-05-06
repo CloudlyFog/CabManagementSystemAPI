@@ -3,13 +3,12 @@ using BankSystem7.Services.Configuration;
 using BankSystem7.Services.Interfaces;
 using CabManagementSystem.Data;
 using CabManagementSystem.Models;
-using CabManagementSystem.Services.Abstract;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CabManagementSystem.Services.Repositories;
 
-public class CarRepository : OptionsUpdater, IRepository<Car>
+public class CarRepository : OptionsUpdater<CabUser, Card, BankAccount, Bank, Credit>, IRepository<Car>
 {
     private readonly CabContext _cabContext;
     private bool _disposed;
